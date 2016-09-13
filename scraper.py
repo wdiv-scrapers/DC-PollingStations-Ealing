@@ -1,4 +1,4 @@
-from gml_scraper import scrape
+from dc_base_scrapers.xml_scraper import Wfs2Scraper
 
 
 stations_url = "http://inspire.misoportal.com/geoserver/london_borough_of_ealing_polling_station_location_point/ows?service=WFS&version=1.1.1&request=GetFeature&typeNames=london_borough_of_ealing_polling_station_location_point&srsName=EPSG%3A4326"
@@ -24,5 +24,7 @@ districts_fields = {
 council_id = 'E09000009'
 
 
-scrape(stations_url, council_id, 'stations', stations_fields, ['polling_station', 'pollingdistrict'], xml_format='wfs/2.0')
-scrape(districts_url, council_id, 'districts', districts_fields, 'distcode', xml_format='wfs/2.0')
+stations_scraper = Wfs2Scraper(stations_url, council_id, 'stations', stations_fields, ['polling_station', 'pollingdistrict'])
+stations_scraper.scrape()
+districts_scraper = Wfs2Scraper(districts_url, council_id, 'districts', districts_fields, 'distcode')
+districts_scraper.scrape()
